@@ -116,7 +116,7 @@ public class CardControllerTest {
 
 		MultiValueMap<String, String> mapCreate = new LinkedMultiValueMap<String, String>();
 		mapCreate.add("name", "test4");
-		mapCreate.add("algo", "SORTED");
+		mapCreate.add("algo", "RANDOM");
 
 		HttpEntity<MultiValueMap<String, String>> requestEntityCreate = new HttpEntity<MultiValueMap<String, String>>(
 				mapCreate, headers);
@@ -126,13 +126,13 @@ public class CardControllerTest {
 		assertTrue(responseCreate.getStatusCode().equals(HttpStatus.OK));
 		
 		//update
-		this.restTemplate.put("/updateDeck?name=test4&algo=RANDOM", String.class);
+		this.restTemplate.put("/updateDeck?name=test4", String.class);
 
 		//get again, you should find it randomly sorted
 		ResponseEntity<String> responseGetDeck = this.restTemplate.getForEntity("/getDeck?name=test4", String.class);
 		assertTrue(responseGetDeck.getStatusCode().equals(HttpStatus.OK));
 	
-		assertTrue(responseGetDeck.getBody().contains("\"algo\":\"RANDOM\""));
+		assertTrue(responseGetDeck.getBody().contains("\"algo\":\"SORTED\""));
 	}
 
 }
