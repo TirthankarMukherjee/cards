@@ -128,7 +128,7 @@ public class CardControllerTest {
 		//update
 		this.restTemplate.put("/updateDeck?name=test4", String.class);
 
-		//get again, you should find it randomly sorted
+		//get again, you should find it  sorted
 		ResponseEntity<String> responseGetDeck = this.restTemplate.getForEntity("/getDeck?name=test4", String.class);
 		assertTrue(responseGetDeck.getStatusCode().equals(HttpStatus.OK));
 	
