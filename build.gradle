@@ -24,6 +24,10 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+bootRun {
+  // support passing -Dsystem.property=value to bootRun task
+  systemProperties = System.properties
+}
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")

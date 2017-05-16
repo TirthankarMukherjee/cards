@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class CardController {
 
 	@Autowired
 	private DeckService deckService;
+	
+	@Value("${reshuffle.algorithm}")
+	private String reshuffleAlgo;
 
 
 	@RequestMapping(value = "/getDeck", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,8 +48,9 @@ public class CardController {
 	}
 	
 	@RequestMapping(value="/updateDeck", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> updateDeck(@RequestParam(value = "algo") String algorithm,@RequestParam(value = "name") String name) {
-		ShuffleAlgo algo = ShuffleAlgo.lookup(algorithm);
+	public ResponseEntity<Object> updateDeck(@RequestParam(value = "name") String name) {
+		ShuffleAlgo algo = ShuffleAlgo.lookup(reshuffleAlgo);
+		System.out.println(" >>>>>>>>>>>  " + algo);
 		deckService.updateDeck(name, algo);
 		return  new ResponseEntity<Object>(HttpStatus.OK);
 	}
